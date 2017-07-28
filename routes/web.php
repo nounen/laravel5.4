@@ -27,3 +27,8 @@ Route::get('/requests', function(Request $request) {
 
     dd($input, $realInput);
 });
+
+// 响应宏
+Route::get('/macro', function() {
+    return response()->caps('foo');
+});
