@@ -178,6 +178,7 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         App\Providers\ResponseMacroServiceProvider ::class,
+        App\Providers\ComposerServiceProvider ::class,
 
     ],
 

@@ -32,3 +32,8 @@ Route::get('/requests', function(Request $request) {
 Route::get('/macro', function() {
     return response()->caps('foo');
 });
+
+// 视图合成器
+Route::get('/composer', function() {
+    return view('profile', ['name' => 'Victoria']);
+});
