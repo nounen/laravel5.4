@@ -37,3 +37,20 @@ Route::get('/macro', function() {
 Route::get('/composer', function() {
     return view('profile', ['name' => 'Victoria']);
 });
+
+// authentication
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/get_auth', 'HomeController@getAuth');
+
+// authentication -- HTTP 基础认证
+Route::get('/auth_basic', function () {
+    dd(\Auth::user()->toArray());
+})->middleware('auth.basic');
+
+// authentication -- 无状态 HTTP 基础认证
+Route::get('/api/user', function () {
+    dd(\Auth::user()->toArray());
+})->middleware('auth.basic.once');
