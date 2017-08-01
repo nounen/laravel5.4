@@ -39,6 +39,7 @@ Route::get('/composer', function() {
 });
 
 // authentication
+// Auth::routes() 包含 'login' 等路由, 可以通过 php artisan route:list 查看
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
@@ -56,36 +57,7 @@ Route::get('/api/user', function () {
 })->middleware('auth.basic.once');
 
 
-// passport
-Route::get('/passport', function () {
-    return view('vue.passport');
-});
-
-// passport -- 授权时的重定向
-Route::get('/redirect', function () {
-    $query = http_build_query([
-        'client_id' => '3',
-        'redirect_uri' => 'http://www.laravel54.dev/callback',
-        'response_type' => 'code',
-        'scope' => '',
-    ]);
-
-    return redirect('http://www.laravel54.dev/oauth/authorize?'.$query);
-});
-
-// passport -- 将授权码转换为访问令牌
-Route::get('/callback', function (Request $request) {
-    $http = new \GuzzleHttp\Client;
-
-    $response = $http->post('http://www.laravel54.dev/oauth/token', [
-        'form_params' => [
-            'grant_type' => 'authorization_code',
-            'client_id' => '3',
-            'client_secret' => 'xIbkkpJabogMvylwhO95P3RzWeVaVRJRDVDwD4ab',
-            'redirect_uri' => 'http://www.laravel54.dev/callback',
-            'code' => $request->code,
-        ],
-    ]);
-
-    return json_decode((string) $response->getBody(), true);
+// vue
+Route::get('/vue', function () {
+    return view('vue.index');
 });

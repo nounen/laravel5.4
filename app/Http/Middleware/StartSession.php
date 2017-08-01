@@ -22,8 +22,10 @@ class StartSession
 
     public function terminate($request, $response)
     {
-        Log::debug($request);
+        // Log::debug($request);
+        Log::debug('StartSession');
 
-        Log::debug($response);
+        // Log::debug($response);
+        Log::debug('StartSession');
     }
 }
