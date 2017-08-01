@@ -39,7 +39,7 @@ Route::get('/composer', function() {
 });
 
 // authentication
-// Auth::routes() 包含 'login' 等路由, 可以通过 php artisan route:list 查看
+// Auth::routes() 包含 'login', 'register' 等路由, 可以通过 php artisan route:list 查看
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
