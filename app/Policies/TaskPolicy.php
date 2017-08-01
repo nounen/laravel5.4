@@ -11,6 +11,16 @@ class TaskPolicy
     use HandlesAuthorization;
 
     /**
+     * [before 策略过滤器, 如果使用了它, 那么下面的授权方法将不会生效]
+     */
+    // public function before($user, $ability)
+    // {
+    //     if ($user->isSuperAdmin()) {
+    //         return true;
+    //     }
+    // }
+
+    /**
      * Determine whether the user can view the task.
      *
      * @param  \App\User  $user
