@@ -24,11 +24,10 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
-
         parent::boot();
 
-        $router->model('task', Task::class);
+        // 模型显示绑定 (路由里的 {task} 都会被转为 Task 模型)
+        Route::model('task', Task::class);
     }
 
     /**
