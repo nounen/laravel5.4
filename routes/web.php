@@ -67,3 +67,17 @@ Route::get('/vue', function () {
 Route::get('/tasks', 'TaskController@index');
 Route::post('/task', 'TaskController@store');
 Route::delete('/task/{task}', 'TaskController@destroy');
+
+
+// encryption
+use Illuminate\Support\Facades\Crypt;
+
+Route::get('/encryption', function() {
+    $encrypted = Crypt::encryptString('Hello world.');
+    $encryptedNew = encrypt('Hello world.');
+
+    $decrypted = Crypt::decryptString($encrypted);
+    $decryptedNew = decrypt($encryptedNew);
+
+    dd($encrypted, $decrypted, $encryptedNew, $decryptedNew);
+});
