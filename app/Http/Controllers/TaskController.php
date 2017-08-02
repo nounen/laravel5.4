@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Task;
+use Gate;
+use Log;
 use Illuminate\Http\Request;
 
 class TaskController extends Controller
@@ -23,6 +25,13 @@ class TaskController extends Controller
 
     public function store(Request $request)
     {
+        // Gate 授权方式
+        if (Gate::allows('create-post')) {
+            Log::debug('allows');
+        } else {
+            Log::debug('denies');
+        }
+
         $this->validate($request, [
             'name' => 'required|max:255',
         ]);

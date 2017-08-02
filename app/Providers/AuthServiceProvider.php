@@ -26,5 +26,11 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
+
+        // Gate 授权方式
+        Gate::define('create-post', function ($user) {
+            // return $user->isSuperAdmin();
+            return false;
+        });
     }
 }
