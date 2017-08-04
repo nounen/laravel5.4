@@ -96,3 +96,23 @@ Route::get('/cache', function () {
 
     dd($name, $test);
 });
+
+
+// collections
+Route::get('/collection', function () {
+    $collection = collect(['taylor', 'abigail', null])->map(function ($name) {
+        return strtoupper($name);
+    })
+    ->reject(function ($name) {
+        return empty($name);
+    });
+
+
+    $total = collect([1, 2, 3])->reduce(function ($carry, $item) {
+        \Log::debug("{$carry} + {$item}");
+
+        return $carry + $item;
+    });
+
+    dd($collection, $total);
+});
