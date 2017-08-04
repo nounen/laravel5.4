@@ -81,3 +81,18 @@ Route::get('/encryption', function() {
 
     dd($encrypted, $decrypted, $encryptedNew, $decryptedNew);
 });
+
+
+// cache -- 多标签操作
+Route::get('/cache', function () {
+    // Cache::tags(['people', 'artists'])->put('John', '$john', 90); // 设置标签 ['people', 'artists']
+
+    // Cache::tags('people')->flush(); // 其中一个标签被清除 ['people', 'artists'] 就无法访问
+
+    $name = Cache::tags(['people', 'artists'])->get('John');
+
+    Cache::tags('test')->put('Test', '$Test', 90);
+    $test = Cache::tags('test')->get('Test');
+
+    dd($name, $test);
+});
