@@ -116,3 +116,9 @@ Route::get('/collection', function () {
 
     dd($collection, $total);
 });
+
+
+// errors -- 自定义异常
+Route::get('/error_custom_exception', function () {
+    throw new App\Exceptions\CustomException('抛出一个自定义异常', 99);
+});

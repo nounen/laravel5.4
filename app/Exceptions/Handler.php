@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Exception;
+use Log;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
@@ -32,6 +33,16 @@ class Handler extends ExceptionHandler
      */
     public function report(Exception $exception)
     {
+        // errors -- 自由处理自定义异常: 记录错误
+        if ($exception instanceof CustomException) {
+            $data = [
+                'code' => $exception->getCode(),
+                'error' => $exception->getMessage(),
+            ];
+
+            Log::debug($data);
+        }
+
         parent::report($exception);
     }
 
@@ -44,6 +55,18 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        // errors -- 自由处理自定义异常: 响应 json 或者渲染到 view
+        if ($exception instanceof CustomException) {
+            $data = [
+                'code' => $exception->getCode(),
+                'error' => $exception->getMessage(),
+            ];
+
+            return response()->view('errors.custom', $data, 500);
+
+            // return response()->json($data, 500);
+        }
+
         return parent::render($request, $exception);
     }
 
