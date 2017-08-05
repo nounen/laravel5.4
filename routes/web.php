@@ -71,6 +71,7 @@ Route::delete('/task/{task}', 'TaskController@destroy');
 
 // encryption
 use Illuminate\Support\Facades\Crypt;
+use App\User;
 
 Route::get('/encryption', function() {
     $encrypted = Crypt::encryptString('Hello world.');
@@ -121,4 +122,13 @@ Route::get('/collection', function () {
 // errors -- 自定义异常
 Route::get('/error_custom_exception', function () {
     throw new App\Exceptions\CustomException('抛出一个自定义异常', 99);
+});
+
+
+// events -- 事件
+Route::get('/events', function () {
+    $user = App\User::find(1);
+
+    // 事件触发
+    event(new App\Events\TestEvent($user));
 });
