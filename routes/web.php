@@ -144,3 +144,11 @@ Route::get('/filesystem', function () {
 
     dd($url, $storagePath);
 });
+
+
+// mail
+Route::get('/mail', function () {
+    $user = App\User::find(2);
+
+    \Mail::to($user)->send(new App\Mail\OrderShipped($user));
+});
