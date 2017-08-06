@@ -132,3 +132,15 @@ Route::get('/events', function () {
     // 事件触发
     event(new App\Events\TestEvent($user));
 });
+
+
+// filesystem
+Route::get('/filesystem', function () {
+    \Storage::disk('local')->put('file.txt', 'Contents');
+
+    $url = Storage::url('file1.jpg');
+
+    $storagePath = storage_path();
+
+    dd($url, $storagePath);
+});
