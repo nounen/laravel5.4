@@ -152,3 +152,9 @@ Route::get('/mail', function () {
 
     \Mail::to($user)->send(new App\Mail\OrderShipped($user));
 });
+
+Route::get('/mail_markdown', function () {
+    $user = App\User::find(2);
+
+    \Mail::to($user)->send(new App\Mail\MarkdownMail());
+});
