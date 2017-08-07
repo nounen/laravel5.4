@@ -191,3 +191,44 @@ Route::get('/read_database_notify', function () {
         $notification->markAsRead(); // 消息标记为已读
     }
 });
+
+
+// queues -- 立即执行
+Route::get('/queue', function () {
+    $user = App\User::find(2);
+
+    // 立即执行
+    dispatch(new App\Jobs\SendReminderEmail($user));
+});
+
+// queues -- 延迟执行
+Route::get('/queue_delay', function () {
+    $user = App\User::find(2);
+
+    // 延迟分发
+    $job = (new App\Jobs\SendReminderEmail($user, 'delay'))->delay(Carbon\Carbon::now()->addMinutes(1));
+    dispatch($job);
+});
+
+// queues -- 分发任务到指定队列
+Route::get('/queue_on_queue', function () {
+    $user = App\User::find(2);
+
+    // 分发任务到指定队列
+    $job = (new App\Jobs\SendReminderEmail($user, 'on_queue'))->onQueue('processing');
+
+    dispatch($job);
+});
+
+// queues -- 分发任务到指定连接
+Route::get('/queue_on_connection', function () {
+    $user = App\User::find(2);
+
+    // 分发任务到指定连接 -- redis
+    $job = (new App\Jobs\SendReminderEmail($user, 'on_connection_redis'))->onConnection('redis');
+
+    // 分发任务到指定连接 -- sync, 同步连接, 立即执行
+    // $job = (new App\Jobs\SendReminderEmail($user, 'on_connection_sync'))->onConnection('sync');
+
+    dispatch($job);
+});
