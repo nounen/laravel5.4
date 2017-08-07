@@ -171,3 +171,23 @@ Route::get('/notification', function () {
 
     Notification::send($users, new App\Notifications\InvoicePaid());
 });
+
+Route::get('/create_database_notify', function () {
+    $user = App\User::find(2);
+
+    // 消息定义通知写入数据库
+    $user->notify(new App\Notifications\NewUserFollowNotification());
+});
+
+Route::get('/read_database_notify', function () {
+    $user = App\User::find(2);
+
+    // 消息查看
+    // foreach ($user->notifications as $notification) {    // 所有消息
+    foreach ($user->unreadNotifications as $notification) { // 所有未读消息
+        dump($notification->type);
+        dump($notification->data['name']); // 消息数据
+
+        $notification->markAsRead(); // 消息标记为已读
+    }
+});
