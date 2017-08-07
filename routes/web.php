@@ -158,3 +158,16 @@ Route::get('/mail_markdown', function () {
 
     \Mail::to($user)->send(new App\Mail\MarkdownMail());
 });
+
+
+// notifications
+Route::get('/notification', function () {
+    $user = App\User::find(2);
+
+    $user->notify(new App\Notifications\InvoicePaid());
+
+    // 发送通知方式 2 (群发)
+    $users = App\User::whereIn('id', [2, 3])->get();
+
+    Notification::send($users, new App\Notifications\InvoicePaid());
+});
