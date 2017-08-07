@@ -2,11 +2,15 @@
 
 namespace App\Providers;
 
+use Log;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
 use View;
-class AppServiceProvider extends ServiceProvider
+use Illuminate\Support\Facades\Queue;
+use Illuminate\Queue\Events\JobProcessed;
+use Illuminate\Queue\Events\JobProcessing;
 
+class AppServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap any application services.
@@ -20,6 +24,15 @@ class AppServiceProvider extends ServiceProvider
 
         // https://laravel-news.com/laravel-5-4-key-too-long-error
         Schema::defaultStringLength(191);
+
+        // queues -- 任务事件
+        Queue::before(function (JobProcessing $event) {
+            Log::info("Queue::before");
+        });
+
+        Queue::after(function (JobProcessed $event) {
+            Log::info("Queue::after");
+        });
     }
 
     /**
