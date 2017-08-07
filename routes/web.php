@@ -232,3 +232,11 @@ Route::get('/queue_on_connection', function () {
 
     dispatch($job);
 });
+
+// queues -- 伪造处理失败的任务
+Route::get('/queue_failed', function () {
+    $user = App\User::find(2);
+
+    // 立即执行
+    dispatch(new App\Jobs\FakeFailedTask($user, 'queue_failed'));
+});

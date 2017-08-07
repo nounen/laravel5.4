@@ -9,6 +9,7 @@ use View;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Queue\Events\JobProcessed;
 use Illuminate\Queue\Events\JobProcessing;
+use Illuminate\Queue\Events\JobFailed;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -32,6 +33,10 @@ class AppServiceProvider extends ServiceProvider
 
         Queue::after(function (JobProcessed $event) {
             Log::info("Queue::after");
+        });
+
+        Queue::failing(function (JobFailed $event) {
+            Log::info("Queue::failing");
         });
     }
 
