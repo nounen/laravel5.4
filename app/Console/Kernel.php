@@ -2,6 +2,8 @@
 
 namespace App\Console;
 
+use DB;
+use Log;
 use App\Console\Commands\SendEmails;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -27,6 +29,14 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
+	
+	$schedule->call(function () {
+	    Log::info('schedule done.');
+	})->everyMinute()->appendOutputTo(storage_path() . '/logs/scheduling.log');
+
+	$schedule->call(function () {
+    	    Log::info('every day 10:30');
+	})->dailyAt('10:30');
     }
 
     /**
