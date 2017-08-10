@@ -40,7 +40,7 @@ class AppServiceProvider extends ServiceProvider
             Log::info("Queue::failing");
         });
 
-        // 监听查询事件: http://d.laravel-china.org/docs/5.4/database#监听查询事件
+        // database 监听查询事件: http://d.laravel-china.org/docs/5.4/database#监听查询事件
         DB::listen(function ($query) {
             Log::debug([
                 'sql'      => $query->sql,

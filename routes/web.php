@@ -240,3 +240,26 @@ Route::get('/queue_failed', function () {
     // 立即执行
     dispatch(new App\Jobs\FakeFailedTask($user, 'queue_failed'));
 });
+
+
+// queries
+Route::get('/queries', function () {
+    $list = App\User::get();
+
+    $name = DB::table('users')->value('name');
+
+    $names = DB::table('users')->pluck('name');
+
+    $namesArr = DB::table('users')->pluck('name', 'email');
+
+    dd($list, $name, $names, $namesArr);
+});
+
+// queries -- cross jon
+Route::get('/queries_cross_join', function () {
+    $list = DB::table('users')
+                ->crossJoin('posts')
+                ->get();
+
+    dd($list);
+});
