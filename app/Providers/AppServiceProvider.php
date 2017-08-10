@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Log;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
 use View;
@@ -37,6 +38,15 @@ class AppServiceProvider extends ServiceProvider
 
         Queue::failing(function (JobFailed $event) {
             Log::info("Queue::failing");
+        });
+
+        // 监听查询事件: http://d.laravel-china.org/docs/5.4/database#监听查询事件
+        DB::listen(function ($query) {
+            Log::debug([
+                'sql'      => $query->sql,
+                'bindings' => $query->bindings,
+                'time'     => $query->time,
+            ]);
         });
     }
 
