@@ -263,3 +263,9 @@ Route::get('/queries_cross_join', function () {
 
     dd($list);
 });
+
+
+// redis
+Route::get('/redis_publish', function () {
+    Redis::publish('test-channel', json_encode(['foo' => 'bar']));
+});

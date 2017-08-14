@@ -5,6 +5,7 @@ namespace App\Console;
 use DB;
 use Log;
 use App\Console\Commands\SendEmails;
+use App\Console\Commands\RedisSubscribe;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -17,6 +18,7 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         SendEmails::class, // 注册命令
+	RedisSubscribe::class,
     ];
 
     /**
