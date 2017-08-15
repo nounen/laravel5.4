@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Queue;
 use Illuminate\Queue\Events\JobProcessed;
 use Illuminate\Queue\Events\JobProcessing;
 use Illuminate\Queue\Events\JobFailed;
+use App\User;
+use App\Observers\UserObserver;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -48,6 +50,9 @@ class AppServiceProvider extends ServiceProvider
                 'time'     => $query->time,
             ]);
         });
+
+        // eloquent -- 观察者
+        User::observe(UserObserver::class);
     }
 
     /**

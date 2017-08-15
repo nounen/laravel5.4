@@ -271,9 +271,16 @@ Route::get('/redis_publish', function () {
 });
 
 
-//
+// 全局作用域
 Route::get('/global_scope', function () {
     $list = App\User::get();
 
     dd(\DB::getQueryLog());
+});
+
+
+Route::get('/eloquent_observe', function () {
+    $item = App\User::find(1);
+    $item->name = $item->name . '_observe';
+    $item->save();
 });
