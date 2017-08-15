@@ -269,3 +269,11 @@ Route::get('/queries_cross_join', function () {
 Route::get('/redis_publish', function () {
     Redis::publish('test-channel', json_encode(['foo' => 'bar']));
 });
+
+
+//
+Route::get('/global_scope', function () {
+    $list = App\User::get();
+
+    dd(\DB::getQueryLog());
+});

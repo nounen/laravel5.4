@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Scopes\TestGlobalScope;
 
 class User extends Authenticatable
 {
@@ -26,6 +27,14 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        // 应用全局作用域
+        static::addGlobalScope(new TestGlobalScope);
+    }
 
     /**
      * 获取该用户的所有任务。
