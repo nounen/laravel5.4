@@ -48,4 +48,24 @@ class User extends Authenticatable
     {
         return true;
     }
+
+    /**
+     * 获取器: 字段未必存在
+     *
+     * 获取用户的名字。
+     */
+    public function getFirstNameAttribute()
+    {
+        return ucfirst($this->name);
+    }
+
+    /**
+     * 修改器: 字段必须存在, 否则 save 时会报错
+     *
+     * 设定用户的名字。
+     */
+    public function setNameAttribute($value)
+    {
+        $this->attributes['name'] = strtolower($value . '-setter');
+    }
 }

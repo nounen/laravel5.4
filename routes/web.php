@@ -284,3 +284,17 @@ Route::get('/eloquent_observe', function () {
     $item->name = $item->name . '_observe';
     $item->save();
 });
+
+
+// 修改器
+Route::get('/eloquent_mutators_getter', function () {
+    $item = App\User::find(1);
+
+    dd($item->first_name); // 获取器获取不存在得模型字段
+});
+
+Route::get('/eloquent_mutators_setter', function () {
+    $item = App\User::find(1);
+    $item->name = 'TEST'; // 会被修改器作用
+    $item->save();
+});
