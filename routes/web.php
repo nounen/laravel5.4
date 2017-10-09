@@ -20,7 +20,7 @@ Route::get('/', function () {
 Route::get('/test_contract', 'TestContractController@index');
 
 // $request->intersect 例子
-Route::get('/requests', function(Request $request) {
+Route::get('/requests', function (Request $request) {
     $input = $request->get('username');
 
     $realInput = $request->intersect(['username', 'password']);
@@ -29,12 +29,12 @@ Route::get('/requests', function(Request $request) {
 });
 
 // 响应宏
-Route::get('/macro', function() {
+Route::get('/macro', function () {
     return response()->caps('foo');
 });
 
 // 视图合成器
-Route::get('/composer', function() {
+Route::get('/composer', function () {
     return view('profile', ['name' => 'Victoria']);
 });
 
@@ -73,7 +73,7 @@ Route::delete('/task/{task}', 'TaskController@destroy');
 use Illuminate\Support\Facades\Crypt;
 use App\User;
 
-Route::get('/encryption', function() {
+Route::get('/encryption', function () {
     $encrypted = Crypt::encryptString('Hello world.');
     $encryptedNew = encrypt('Hello world.');
 
@@ -264,6 +264,18 @@ Route::get('/queries_cross_join', function () {
     dd($list);
 });
 
+// redis 连接测试
+Route::get('/redis_check', function () {
+    $redis=new Redis();
+    $redis->connect(env('REDIS_HOST'), env('REDIS_PORT'));
+    $redis->auth(env('REDIS_PASSWORD'));
+
+    if ($redis->ping()) {
+        echo "redis 连接成功 \n";
+    } else {
+        echo "redis 连接失败 \n";
+    }
+});
 
 // redis
 Route::get('/redis_publish', function () {
